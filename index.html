@@ -11,10 +11,10 @@
         <h1>茶寵網店</h1>
         <nav>
             <ul>
-                <li><a href="#">首頁</a></li>
-                <li><a href="#">產品</a></li>
-                <li><a href="#">關於我們</a></li>
-                <li><a href="#">聯絡我們</a></li>
+                <li><a href="#home">首頁</a></li>
+                <li><a href="#products">產品</a></li>
+                <li><a href="about.html">關於我們</a></li>
+                <li><a href="contact.html">聯絡我們</a></li>
             </ul>
         </nav>
         <div class="controls">
@@ -27,17 +27,61 @@
             <button id="cart-button">購物車 (<span id="cart-count">0</span>)</button>
         </div>
     </header>
-    <main>
-        <div id="product-list" class="product-list"></div>
-        <div id="cart-view" class="cart-view hidden">
-            <h2>購物車</h2>
-            <ul id="cart-items"></ul>
-            <button id="checkout-button">結帳</button>
-        </div>
+    <main id="home">
+        <section id="intro" class="intro-section">
+            <h2>歡迎來到茶寵網店</h2>
+            <p>我們提供各種精美的茶寵，讓您的茶道體驗更加完美。每一件茶寵都經過精心製作，品質保證。</p>
+            <p>Welcome to the Tea Pet Online Store! We offer a variety of exquisite tea pets to make your tea ceremony experience more complete. Each tea pet is meticulously crafted and guaranteed for quality.</p>
+        </section>
+        <section id="products" class="product-list">
+            
+            <div class="product-card">
+                <a href="product1.html">
+                    <img src="images/1.png" alt="茶寵 1">
+                    <h2>茶寵 1</h2>
+                    <p>用高品質黏土精心製作的美麗茶寵。</p>
+                    <p>$29.99</p>
+                </a>
+                <button onclick="addToCart(1)">加入購物車</button>
+            </div>
+            <div class="product-card">
+                <a href="product2.html">
+                    <img src="images/2.png" alt="茶寵 2">
+                    <h2>茶寵 2</h2>
+                    <p>獨特設計的茶寵，為您的茶會增添魅力。</p>
+                    <p>$34.99</p>
+                </a>
+                <button onclick="addToCart(2)">加入購物車</button>
+            </div>
+            <div class="product-card">
+                <a href="product3.html">
+                    <img src="images/3.png" alt="茶寵 3">
+                    <h2>茶寵 3</h2>
+                    <p>手繪的茶寵，具有精緻的細節。</p>
+                    <p>$25.99</p>
+                </a>
+                <button onclick="addToCart(3)">加入購物車</button>
+            </div>
+            <div class="product-card">
+                <a href="product4.html">
+                    <img src="images/4.png" alt="茶寵 4">
+                    <h2>茶寵 4</h2>
+                    <p>經典茶寵，為您的茶道帶來優雅。</p>
+                    <p>$39.99</p>
+                </a>
+                <button onclick="addToCart(4)">加入購物車</button>
+            </div>
+        </section>
     </main>
     <footer>
         <p>&copy; 2024 茶寵網店</p>
     </footer>
+    <div id="cart-view" class="cart-view hidden">
+        <button id="close-cart" class="close-cart-button">✖</button>
+        <h2>購物車</h2>
+        <ul id="cart-items"></ul>
+        <button id="checkout-button">結帳</button>
+    </div>
     <script src="scripts.js"></script>
 </body>
 </html>

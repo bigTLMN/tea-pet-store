@@ -1,123 +1,155 @@
-const products = [
-    {
-        name: '茶寵 1',
-        description: '用高品質黏土精心製作的美麗茶寵。',
-        price: 29.99,
-        imageUrl: 'https://example.com/tea_pet1.jpg'
-    },
-    {
-        name: '茶寵 2',
-        description: '獨特設計的茶寵，為您的茶會增添魅力。',
-        price: 34.99,
-        imageUrl: 'https://example.com/tea_pet2.jpg'
-    },
-    {
-        name: '茶寵 3',
-        description: '手繪的茶寵，具有精緻的細節。',
-        price: 25.99,
-        imageUrl: 'https://example.com/tea_pet3.jpg'
-    },
-    {
-        name: '茶寵 4',
-        description: '經典茶寵，為您的茶道帶來優雅。',
-        price: 39.99,
-        imageUrl: 'https://example.com/tea_pet4.jpg'
-    }
-];
+document.addEventListener('DOMContentLoaded', () => {
+    const cartButton = document.getElementById('cart-button');
+    const cartView = document.getElementById('cart-view');
+    const closeCartButton = document.getElementById('close-cart');
+    const cartItems = document.getElementById('cart-items');
+    const cartCount = document.getElementById('cart-count');
+    const checkoutButton = document.getElementById('checkout-button');
+    const productList = document.getElementById('products');
 
-let cart = [];
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let products = [];
 
-function loadProducts(sortOrder = 'price-asc') {
-    fetch('/products')
-        .then(response => response.json())
-        .then(products => {
-            const productList = document.getElementById('product-list');
-            productList.innerHTML = '';
-
-            const sortedProducts = [...products];
-            if (sortOrder === 'price-asc') {
-                sortedProducts.sort((a, b) => a.price - b.price);
-            } else if (sortOrder === 'price-desc') {
-                sortedProducts.sort((a, b) => b.price - a.price);
+    function parseINIString(data) {
+        const regex = {
+            section: /^\s*\[\s*([^\]]*)\s*\]\s*$/,
+            param: /^\s*([\w\.\-\_]+)\s*=\s*(.*?)\s*$/,
+            comment: /^\s*;.*$/
+        };
+        const value = {};
+        const lines = data.split(/[\r\n]+/);
+        let section = null;
+        lines.forEach(line => {
+            if (regex.comment.test(line)) {
+                return;
+            } else if (regex.param.test(line)) {
+                const match = line.match(regex.param);
+                if (section) {
+                    value[section][match[1]] = match[2];
+                } else {
+                    value[match[1]] = match[2];
+                }
+            } else if (regex.section.test(line)) {
+                const match = line.match(regex.section);
+                value[match[1]] = {};
+                section = match[1];
+            } else if (line.length === 0 && section) {
+                section = null;
             }
+        });
+        return value;
+    }
 
-            sortedProducts.forEach(product => {
+    function loadProducts(callback) {
+        fetch('products.ini')
+            .then(response => response.text())
+            .then(data => {
+                const products = parseINIString(data);
+                callback(products);
+            })
+            .catch(err => console.error('Failed to load products.ini', err));
+    }
+
+    function updateCartView() {
+        cartItems.innerHTML = '';
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} - $${item.price} x ${item.quantity}`;
+            const removeButton = document.createElement('button');
+            removeButton.textContent = '移除';
+            removeButton.onclick = () => removeFromCart(item.id);
+            li.appendChild(removeButton);
+            cartItems.appendChild(li);
+        });
+        cartCount.textContent = cart.length;
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    window.addToCart = function(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) {
+            alert('產品未找到');
+            return;
+        }
+        const cartItem = cart.find(item => item.id === productId);
+        if (cartItem) {
+            cartItem.quantity += 1;
+        } else {
+            cart.push({...product, quantity: 1});
+        }
+        updateCartView();
+        alert(`產品 ${product.name} 已加入購物車`);
+    }
+
+    function removeFromCart(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        updateCartView();
+    }
+
+    cartButton.onclick = () => {
+        cartView.classList.toggle('hidden');
+    }
+
+    closeCartButton.onclick = () => {
+        cartView.classList.add('hidden');
+    }
+
+    checkoutButton.onclick = () => {
+        alert('結帳功能尚未實現');
+    }
+
+    function displayProducts(products) {
+        if (productList) {
+            productList.innerHTML = '';
+            products.forEach(product => {
+                if (!product.id || !product.name || !product.description || !product.price || !product.image) {
+                    return; // Skip any product that doesn't have the necessary information
+                }
+
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
-                
-                const img = document.createElement('img');
-                img.src = product.imageUrl;
-                img.alt = product.name;
-                
-                const h2 = document.createElement('h2');
-                h2.textContent = product.name;
-                
-                const pDesc = document.createElement('p');
-                pDesc.textContent = product.description;
-                
-                const pPrice = document.createElement('p');
-                pPrice.textContent = `$${product.price.toFixed(2)}`;
-
-                const button = document.createElement('button');
-                button.textContent = '加入購物車';
-                button.addEventListener('click', () => addToCart(product));
-                
-                productCard.appendChild(img);
-                productCard.appendChild(h2);
-                productCard.appendChild(pDesc);
-                productCard.appendChild(pPrice);
-                productCard.appendChild(button);
-                
+                productCard.innerHTML = `
+                    <a href="product${product.id}.html">
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                        <h2>${product.name}</h2>
+                        <p>${product.description}</p>
+                        <p>$${product.price}</p>
+                    </a>
+                    <button onclick="addToCart(${product.id})">加入購物車</button>
+                `;
                 productList.appendChild(productCard);
             });
+        }
+    }
+
+    loadProducts(loadedProducts => {
+        products = Object.keys(loadedProducts).filter(key => key.startsWith('product')).map(key => {
+            const product = loadedProducts[key];
+            return {
+                id: parseInt(key.replace('product', '')),
+                name: product.name,
+                description: product.description,
+                price: parseFloat(product.price),
+                image: product.image,
+                detailsPage: `product${key.replace('product', '')}.html`
+            };
         });
-}
 
-function addToCart(product) {
-    cart.push(product);
-    updateCartCount();
-    updateCartView();
-}
+        displayProducts(products);
+        updateCartView();
 
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCartCount();
-    updateCartView();
-}
-
-function updateCartCount() {
-    document.getElementById('cart-count').textContent = cart.length;
-}
-
-function updateCartView() {
-    const cartItems = document.getElementById('cart-items');
-    cartItems.innerHTML = '';
-
-    cart.forEach((product, index) => {
-        const li = document.createElement('li');
-        li.textContent = `${product.name} - $${product.price.toFixed(2)}`;
-        
-        const removeButton = document.createElement('button');
-        removeButton.textContent = '移除';
-        removeButton.addEventListener('click', () => removeFromCart(index));
-        
-        li.appendChild(removeButton);
-        cartItems.appendChild(li);
-    });
-
-    const cartView = document.getElementById('cart-view');
-    cartView.classList.toggle('hidden', cart.length === 0);
-}
-
-document.getElementById('cart-button').addEventListener('click', () => {
-    const cartView = document.getElementById('cart-view');
-    cartView.classList.toggle('hidden');
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadProducts();
-    
-    document.getElementById('sort-select').addEventListener('change', (event) => {
-        loadProducts(event.target.value);
+        if (document.querySelector('.product-detail')) {
+            const productId = parseInt(window.location.pathname.match(/product(\d+)/)[1]);
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                document.querySelector('.product-detail h2').textContent = product.name;
+                document.querySelector('.product-detail img').src = product.image;
+                document.querySelector('.product-detail img').alt = product.name;
+                document.querySelector('.product-detail .product-size').textContent = `尺寸：${product.size || ''}`;
+                document.querySelector('.product-detail .product-price').textContent = `價格：$${product.price}`;
+                document.querySelector('.product-detail .product-discount').textContent = '優惠：購買兩件享九折優惠';
+                document.querySelector('.product-detail button').onclick = () => addToCart(product.id);
+            }
+        }
     });
 });
