@@ -1,19 +1,31 @@
+/* Reset some basic styles */
+body, h1, h2, h3, h4, h5, h6, p, ul, li, a {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+/* Basic styles for the body */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background: url('./images/background.png') no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
+/* Header styles */
 header {
     background-color: #333;
     color: white;
     padding: 1rem;
     text-align: center;
     position: relative;
+    z-index: 1000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -65,21 +77,75 @@ select {
     border: 1px solid #ccc;
 }
 
+/* Sidebar styles */
+.sidebar {
+    position: fixed;
+    top: 70px; /* Adjust this value based on your header height */
+    left: 0;
+    width: 200px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    height: calc(100% - 70px); /* Adjust this value based on your header height */
+    overflow-y: auto;
+    z-index: 900; /* Lower than the header */
+}
+
+.sidebar ul {
+    padding: 10px 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebar ul li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Main content styles */
 main {
-    padding: 2rem;
+    margin-left: 220px; /* Adjust this value based on your sidebar width */
+    padding: 20px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .intro-section {
-    background: url('background.jpg') no-repeat center center;
-    background-size: cover;
+    background: rgba(255, 255, 255, 0.8);
     color: black;
     text-align: center;
     padding: 5rem 2rem;
     border-radius: 10px;
     margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 800; /* Lower than the sidebar */
 }
 
+.intro-text {
+    width: 100%;
+}
+
+.intro-text h2 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.intro-text p {
+    margin: 0.5rem 0;
+}
+
+/* Product list styles */
 .product-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -140,27 +206,20 @@ main {
 }
 
 .product-image {
-    width: 100%;
-    height: auto;
-    max-width: 300px;
-    object-fit: cover;
-}
-
-.product-image {
     width: 300px;  /* 您可以根據需要調整大小 */
     height: 300px; /* 您可以根據需要調整大小 */
     object-fit: cover; /* 保持圖片比例 */
 }
 
+/* Footer styles */
 footer {
     background-color: #333;
     color: white;
     padding: 1rem;
     text-align: center;
-    position: relative;
     width: 100%;
-    bottom: 0;
-    flex-shrink: 0;
+    position: relative;
+    z-index: 800; /* Lower than the sidebar */
 }
 
 .cart-view {

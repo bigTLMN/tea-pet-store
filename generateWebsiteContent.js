@@ -68,7 +68,9 @@ function createProductHTML(productId, product) {
     </header>
     <main class="product-detail">
         <h2>${product.name}</h2>
-        <img src="${product.image}" alt="${product.name}" class="product-image">
+        <div class="product-image-wrapper">
+            <img src="${product.image}" alt="${product.name}" class="product-image">
+        </div>        
         <p>${product.description}</p>
         <p class="product-size">尺寸：${product.size || ''}</p>
         <p class="product-price">價格：$${product.price}</p>
@@ -167,7 +169,7 @@ function createIndexHTML(products) {
             productsHTML += `
             <div class="product-card">
                 <a href="product${key.replace('product', '')}.html">
-                    <img src="${product.image}" alt="${product.name}">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
                     <h2>${product.name}</h2>
                     <p>${product.description}</p>
                     <p>$${product.price}</p>
@@ -208,9 +210,20 @@ function createIndexHTML(products) {
     </header>
     <main id="home">
         <section id="intro" class="intro-section">
-            <h2>歡迎來到茶寵網店</h2>
-            <p>我們提供各種精美的茶寵，讓您的茶道體驗更加完美。每一件茶寵都經過精心製作，品質保證。</p>
-            <p>Welcome to the Tea Pet Online Store! We offer a variety of exquisite tea pets to make your tea ceremony experience more complete. Each tea pet is meticulously crafted and guaranteed for quality.</p>
+            <div class="intro-content">
+                <aside class="sidebar">
+                    <ul>
+                        <li><a href="#teapets">茶寵</a></li>
+                        <li><a href="#bracelets">手鐲</a></li>
+                        <li><a href="#woodcarvings">木雕</a></li>
+                    </ul>
+                </aside>
+                <div class="intro-text">
+                    <h2>歡迎來到茶寵網店</h2>
+                    <p>我們提供各種精美的茶寵，讓您的茶道體驗更加完美。每一件茶寵都經過精心製作，品質保證。</p>
+                    <p>Welcome to the Tea Pet Online Store! We offer a variety of exquisite tea pets to make your tea ceremony experience more complete. Each tea pet is meticulously crafted and guaranteed for quality.</p>
+                </div>
+            </div>
         </section>
         <section id="products" class="product-list">
             ${productsHTML}
