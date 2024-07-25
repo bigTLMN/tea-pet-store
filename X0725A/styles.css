@@ -1,0 +1,442 @@
+/* Reset some basic styles */
+body, h1, h2, h3, h4, h5, h6, p, ul, li, a {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+/* Basic styles for the body */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('./images/background.png') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #333;
+}
+
+/* Header styles */
+header {
+    background-color: #292b2c;
+    color: #f7f7f7;
+    padding: 1.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* 确保 header 布满整个宽度 */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: #f7f7f7;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ffcc00;
+}
+
+.controls, .cart {
+    position: absolute;
+    top: 1rem;
+}
+
+.controls {
+    right: 12rem;
+}
+
+.cart {
+    right: 6rem;
+}
+
+select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Sidebar styles */
+.sidebar {
+    position: fixed;
+    top: 100px; /* Adjust this value based on your header height */
+    left: 0;
+    width: 220px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    height: calc(100% - 100px); /* Adjust this value based on your header height */
+    overflow-y: auto;
+    z-index: 900; /* Lower than the header */
+}
+
+.sidebar ul {
+    padding: 15px 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebar ul li a {
+    color: #292b2c;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+    color: #5a2d82;
+}
+
+/* Common main content styles */
+main {
+    margin-left: 260px;
+    padding: 30px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+main.home-about {
+    margin-right: 240px;
+}
+main.home-contact {
+    margin-right: 240px;
+}
+
+.intro-section {
+    background: rgba(255, 255, 255, 0.9);
+    color: black;
+    text-align: center;
+    padding: 4rem 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 800; /* Lower than the sidebar */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.intro-text {
+    width: 100%;
+    max-width: 800px;
+}
+
+.intro-text h2 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.intro-text p {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+}
+
+/* Product highlight styles */
+.product-highlight {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 2000px; /* 添加最大宽度以对齐 */
+    text-align: center;
+    display: flex; /* 使用 flex 布局 */
+    flex-direction: column;
+    align-items: center;
+}
+
+.highlight-title {
+    color: #DAA520; /* 使用金色 */
+    margin-bottom: 1.8rem;
+    text-align: center;
+}
+
+/* Product list styles */
+.product-list {
+    display: flex;
+    flex-wrap: wrap; /* 允许子元素换行 */
+    gap: 1.5rem;
+    justify-content: flex-start; /* 确保从左到右排列 */
+    align-items: flex-start; /* 确保从上到下排列 */
+    width: 100%; /* 确保 product-list 占满父元素宽度 */
+}
+
+.product-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: calc(25% - 2rem); /* 确保每行最多显示4个 */
+    max-width: 320px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem; /* 添加margin以确保从左至右排列 */
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+}
+
+.product-card h2 {
+    margin: 1rem 0;
+    color: #292b2c;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.product-card p {
+    margin: 0.5rem 1rem;
+    color: #666;
+}
+
+.product-card a {
+    text-decoration: none;
+    color: #5a2d82;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.product-card a:hover {
+    color: #ffcc00;
+}
+
+.product-card button {
+    background-color: #292b2c;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    margin: 1rem 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* 设置按钮宽度为100% */
+    max-width: 300px; /* 确保与图片宽度一致 */
+    box-sizing: border-box; /* 包含内边距和边框 */
+    font-size: 1.1rem;
+}
+
+.product-card button:hover {
+    background-color: #5a2d82;
+}
+
+.product-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    gap: 1rem;
+}
+
+.product-detail h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.product-image-wrapper {
+    text-align: left;
+}
+
+.product-detail img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+    text-align: left;
+}
+
+.product-info p {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-detail button {
+    padding: 0.75rem 1.5rem;
+    background-color: #292b2c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: left;
+    font-size: 1.1rem;
+    border-radius: 5px;
+}
+
+.product-detail button:hover {
+    background-color: #5a2d82;
+}
+
+/* Footer styles */
+footer {
+    background-color: #292b2c;
+    color: #f7f7f7;
+    padding: 1.5rem;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    z-index: 800; /* Lower than the sidebar */
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart-view {
+    position: fixed;
+    top: 5rem;
+    right: 1rem;
+    width: 320px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.cart-view.hidden {
+    display: none;
+}
+
+#cart-items {
+    list-style: none;
+    padding: 0;
+}
+
+#cart-items li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+#cart-items li button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#cart-items li button:hover {
+    background-color: #c0392b;
+}
+
+.clear-cart-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem; /* 调整字体大小 */
+}
+
+.clear-cart-button:hover {
+    background-color: #c0392b;
+}
+
+#checkout-button {
+    background-color: #5a2d82;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem; /* 调整按钮大小 */
+    cursor: pointer;
+    margin-top: 1rem;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem; /* 调整字体大小 */
+}
+
+#checkout-button:hover {
+    background-color: #4a1e6a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .intro-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .intro-text {
+        margin: 0;
+    }
+
+    .sidebar {
+        flex: 0 0 auto;
+        position: relative;
+        width: 100%;
+    }
+
+    .product-card {
+        max-width: 100%;
+    }
+
+    .product-image {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.content-box {
+    margin: auto; /* 垂直和水平居中 */
+    padding: 3rem; /* 增加内边距 */
+    max-width: 1200px; /* 增加最大宽度 */
+    border: 2px solid #ddd; /* 增加边框宽度 */
+    border-radius: 10px; 
+    background-color: rgba(255, 255, 255, 0.9); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    text-align: center;
+    display: flex; /* 使用 flex 布局 */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh; /* 设置最小高度 */
+}

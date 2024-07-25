@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>茶寵 1 - 茶寵網店</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>茶寵網店</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html#home">首頁</a></li>
+                <li><a href="index.html#products">產品</a></li>
+                <li><a href="about.html">關於我們</a></li>
+                <li><a href="contact.html">聯絡我們</a></li>
+            </ul>
+        </nav>
+        <div class="controls">
+            <select id="sort-select">
+                <option value="price-asc">價格：低到高</option>
+                <option value="price-desc">價格：高到低</option>
+            </select>
+        </div>
+        <div class="cart">
+            <button id="cart-button">購物車 (<span id="cart-count">0</span>)</button>
+        </div>
+    </header>
+    <main class="product-detail">
+        <h2>茶寵 1</h2>
+        <div class="product-image-wrapper">
+            <img src="images/1.png" alt="茶寵 1" class="product-image">
+        </div>
+        <div class="product-info">
+            <p>用高品質黏土精心製作的美麗茶寵。</p>
+            <p class="product-size">尺寸：10cm x 5cm</p>
+            <p class="product-price">價格：$29.99</p>
+            <p class="product-discount">優惠：購買兩件享九折優惠</p>
+            <button class="add-to-cart-btn" onclick="addToCart(1)">加入購物車</button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 茶寵網店</p>
+    </footer>
+    <div id="cart-view" class="cart-view hidden">
+        <button id="close-cart" class="close-cart-button">✖</button>
+        <h2>購物車</h2>
+        <ul id="cart-items"></ul>
+        <button id="checkout-button">結帳</button>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
