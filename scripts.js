@@ -33,18 +33,61 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addToCart = function(productId) {
-        const productCard = document.querySelector(`a[href="product${productId}.html"]`);
-        if (!productCard) return;
+        let productCard;
+        const url = window.location.href;
 
-        const productName = productCard.querySelector('h2').textContent;
-        const productPrice = productCard.querySelector('p:nth-child(4)').textContent.replace('$', '');
+        if (url.includes("index.html")) {
+            productCard = document.querySelector(`.product-card button[onclick="addToCart(${productId})"]`).parentElement;
+        } else {
+            productCard = document.querySelector('.product-detail');
+        }
+
+        if (!productCard) {
+            alert('找不到產品卡片');
+            return;
+        }
+
+        const productNameElement = productCard.querySelector('h2');
+        const productPriceElement = productCard.querySelector('.product-price');
+
+        if (!productNameElement || !productPriceElement) {
+            alert('找不到產品信息');
+            return;
+        }
+
+        const productName = productNameElement.textContent;
+        const productPrice = productPriceElement.textContent.replace('價格：$', '');
 
         cart.push({ name: productName, price: parseFloat(productPrice) });
         localStorage.setItem('cart', JSON.stringify(cart));
         cartCount.textContent = cart.length;
         updateCartView();
-        alert('商品已加入購物車');
+        showCartSuccessMessage(productName);
     };
+
+    function showCartSuccessMessage(productName) {
+        const successMessage = document.createElement('div');
+        successMessage.className = 'cart-success-message';
+        successMessage.textContent = `${productName} 已成功加入購物車!`;
+
+        // 设置样式
+        successMessage.style.position = 'fixed';
+        successMessage.style.bottom = '20px';
+        successMessage.style.right = '20px';
+        successMessage.style.backgroundColor = 'green';
+        successMessage.style.color = 'white';
+        successMessage.style.padding = '10px';
+        successMessage.style.borderRadius = '5px';
+        successMessage.style.zIndex = '1000';
+
+        // 将成功信息添加到页面上
+        document.body.appendChild(successMessage);
+
+        // 3秒后移除成功信息
+        setTimeout(() => {
+            successMessage.remove();
+        }, 3000);
+    }
 
     updateCartView();
     cartCount.textContent = cart.length;
